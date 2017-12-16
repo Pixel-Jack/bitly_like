@@ -1,0 +1,105 @@
+{% extends "base_bitly.html" %}
+
+{% block content %}
+<div class="stage">
+    <header id="header" data-template="stage-header">
+        <div id="header-inner">
+            <div class="container container-pod container-pod-short">
+                <h1 class="header-logo"><a href="http://localhost:8000/" rel="nofollow"></a></h1>
+                <nav class="navigation" role="navigation">
+                    <ul>
+                        <li><a href="http://localhost:8000/">Home</a></li>
+                        <li><a href="https://bitly.com/pages/tour">Tour</a></li>
+                        <li><a href="https://bitly.com/pages/enterprise">Enterprise</a></li>
+                        <li><a href="https://bitly.com/pages/resources">Resources</a></li>
+                        <li><a href="https://bitly.com/blog/">Blog</a></li>
+                        <li><a href="https://bitly.com/pages/about">About</a></li>
+                    </ul>
+                </nav>
+                <div class="header-button-wrapper">
+                    <a class="header-signup" href="{% url 'sign out' %}">Sign out</a>
+                </div>
+                <div class="mobile-sign-in">
+                    <a class="signup" href="{% url 'sign out' %}">Sign out</a>
+                    <a id="header-mobile-menu-button" href="#">
+                        <i class="icon-menu-open"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+
+    <div id="container" class="clearfix">
+        <div class="container container-pod shorten-container">
+            <h1 class="page-title t-center">{{username}}, this is your links :</h1>
+            <div>
+                {% if message %}
+                {{ message }}
+                {% endif %}
+            </div>
+            <div id="form_container" class="t-center mid-container foot-room">
+
+                <form method="POST" action="{% url 'user space'%}" name="shortenUrl">
+                    {% csrf_token %}
+                    <fieldset class="cf">
+                        {{ form }}
+                        <input id="shorten_btn2" class="button button-primary button-large shorten-button"
+                               value="Shorten" type="submit">
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="link-container mid-container">
+                <div id="shortened_info">
+                    <ul id="most_recent_link" class="anon_history footroom">
+                    </ul>
+                </div>
+                <div>
+                    <ul id="anon_history" class="anon_history" style="display: block;">
+                        {% for link_info in list_your_links %}
+                            <li id="{{link_info.bit_link}}" class="shortened_link" data-user_hash="{{link_info.bit_link}}"
+                                data-short_link="http://localhost:8000/{{link_info.bit_link}}">
+                                <div class="unauth-title">
+                                    <a class="article-title"
+                                       href="{{link_info.link}}">{{link_info.link}}</a>
+                                </div>
+                                <div class="unauth-title-url">
+                                    <a class="article-title smaller"
+                                       href="{{link_info.link}}">{{link_info.link}}</a>
+                                </div>
+                                <div class="unauth_capsule clearfix">
+                                    <a class="short-url"
+                                       href="http://localhost:8000/{{link_info.bit_link}}">http://localhost:8000/{{link_info.bit_link}}
+                                    </a>
+                                    <input
+                                            id="copy-input"
+                                            class="copy-input {{ forloop.counter0 }}"
+                                            value="http://localhost:8000/{{link_info.bit_link}}"
+                                            tabindex="-1"
+                                            readonly="readonly">
+                                    <button class="copy button primary" data-clipboard-target="#copy-input">Copy</button class="copy button primary">
+                                    <a
+                                            class="info_page" href="https://bitly.com/{{link_info.bit_link}}+"><i
+                                            class="default fa fa-bar-chart-o"></i> {{link_info.count_hits}}</a>
+                                </div>
+
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="bottom">
+
+            <form action="" method="get">
+                <input name="_xsrf" value="2f95d83ec6304ca5aa4e784bf1f60abd" type="hidden">
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+

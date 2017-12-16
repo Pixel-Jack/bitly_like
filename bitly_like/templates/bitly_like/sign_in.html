@@ -1,0 +1,66 @@
+{% extends "base_bitly.html" %}
+
+{% block content %}
+
+<div class="stage">
+    <header id="header" data-template="stage-header">
+        <div id="header-inner">
+            <div class="container container-pod container-pod-short">
+                <h1 class="header-logo"><a href="http://localhost:8000/" rel="nofollow"></a></h1>
+                <nav class="navigation" role="navigation">
+                    <ul>
+                        <li><a href="http://localhost:8000/">Home</a></li>
+                        <li><a href="https://bitly.com/pages/tour">Tour</a></li>
+                        <li><a href="https://bitly.com/pages/enterprise">Enterprise</a></li>
+                        <li><a href="https://bitly.com/pages/resources">Resources</a></li>
+                        <li><a href="https://bitly.com/blog/">Blog</a></li>
+                        <li><a href="https://bitly.com/pages/about">About</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+
+    <div id="container" class="clearfix">
+        <div class="container container-pod shorten-container">
+            <h1 class="page-title t-center">THE LINK KNOWS ALL. SO CAN YOU.</h1>
+            <div class="join-bitly t-center">Measure your links with Bitly, the world's leading link management
+                platform.
+            </div>
+            <div>
+                {% if error %}
+
+                <p><strong>Unknown user or password</strong></p>
+
+                {% endif %}
+            </div>
+            <div>
+                <div class="t-center mid-container foot-room">
+                    <div class="container-box" style="display: -moz-grid;">
+                        <div id="form_container" class="t-center mid-container foot-room">
+                            <form method="POST" action="{% url 'sign in' %}" name="shortenUrl">
+                                {% csrf_token %}
+                                <fieldset class="cf">
+                                    {{ form }}
+                                    <input id="shorten_btn2" class="button button-primary button-large shorten-button"
+                                           value="Login" type="submit" style="margin: 10px;position: static">
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="bottom">
+
+                <form action="" method="get">
+                    <input name="_xsrf" value="2f95d83ec6304ca5aa4e784bf1f60abd" type="hidden">
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
